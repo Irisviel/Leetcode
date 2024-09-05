@@ -6,25 +6,27 @@
  */
 public class LongPressedName {
     public static boolean isLongPressedName(String name, String typed) {
-        if (typed.length() < name.length()) return false;
-        int k = 0;
-        for (int i = 0; i < name.length(); i++) {
-            if ((i < name.length() - 1) && (name.charAt(i + 1) == name.charAt(i))) {
-                if (name.charAt(i) != typed.charAt(k)) return false;
-                k++;
-            } else if ((i < name.length() - 1) && (name.charAt(i + 1) != name.charAt(i))) {
-                if (k >= typed.length()) return false;
-                if (name.charAt(i) != typed.charAt(k)) return false;
-                while ((k < typed.length()) && (name.charAt(i) == typed.charAt(k)))
-                    k++;
-            } else if ((i == name.length() - 1)) {
-                if (k >= typed.length()) return false;
-                if (name.charAt(i) != typed.charAt(k)) return false;
+        int i = 0, j = 0;
+        while (i < name.length() && j < typed.length()) {
+            if (name.charAt(i) == typed.charAt(j)) {
+                i++;
+                j++;
+            } else if ((i > 0) && (name.charAt(i - 1) == typed.charAt(j))) {
+                j++;
+            } else {
+                if (j == 0) {
+                    return false;
+                }
+                return false;
             }
         }
-        for (int j = k; j < typed.length() - 1; j++) {
-            if (typed.charAt(j) != typed.charAt(j + 1)) return false;
+        while (i == name.length() && j < typed.length()) {
+            if (name.charAt(i - 1) == typed.charAt(j)) {
+                j++;
+            } else {
+                return false;
+            }
         }
-        return true;
+        return i == name.length() && j == typed.length();
     }
 }

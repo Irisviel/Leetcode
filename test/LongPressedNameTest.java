@@ -63,4 +63,14 @@ class LongPressedNameTest {
     void isLongPressedName12() {
         assertEquals(false, LongPressedName.isLongPressedName("bdad", "bbbd"));
     }
+
+    @Test
+    void isLongPressedName13() {
+        assertEquals(false, LongPressedName.isLongPressedName("alex", "aaleelx"));
+    }
+
+    @Test
+    void isLongPressedName14() {
+        assertEquals(false, LongPressedName.isLongPressedName("alice", "elice"));
+    }
 }
