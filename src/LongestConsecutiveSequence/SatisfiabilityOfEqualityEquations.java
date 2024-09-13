@@ -1,6 +1,13 @@
 /*
  * https://leetcode.com/problems/satisfiability-of-equality-equations/description/
+ * You are given an array of strings equations that represent relationships between variables where each string equations[i] is of length 4
+ * and takes one of two different forms: "x==y" or "x!=y".Here, x and y are lowercase letters (not necessarily different) that represent one-letter variable names.
+ * Return true if it is possible to assign integers to variable names so as to satisfy all the given equations, or false otherwise.
  */
+
+package LongestConsecutiveSequence;
+
+import structs.DataSetUnion;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -41,8 +48,8 @@ public class SatisfiabilityOfEqualityEquations {
         System.out.println(size);
         int[] groups = new int[size];
         int groupOffset = 1;
-        List<E> pros = new ArrayList<>();
-        List<E> cons = new ArrayList<>();
+        List<EquationUnit> pros = new ArrayList<>();
+        List<EquationUnit> cons = new ArrayList<>();
         Map<Integer, Integer[]> arr = new HashMap<>();
 
         for (String line : equations) {
@@ -51,11 +58,11 @@ public class SatisfiabilityOfEqualityEquations {
             int second = line.charAt(3) - 97;
             System.out.println(second);
             boolean equal = line.charAt(1) == '=';
-            if (equal) pros.add(new E(first, second, true));
-            else cons.add(new E(first, second, false));
+            if (equal) pros.add(new EquationUnit(first, second, true));
+            else cons.add(new EquationUnit(first, second, false));
         }
         System.out.println();
-        for (E e : pros) {
+        for (EquationUnit e : pros) {
             if ((groups[e.first] == 0) && (groups[e.second] == 0)) {
                 groups[e.first] = groupOffset;
                 groups[e.second] = groupOffset;
@@ -73,7 +80,7 @@ public class SatisfiabilityOfEqualityEquations {
                 }
             }
         }
-        for (E e : cons) {
+        for (EquationUnit e : cons) {
             if ((groups[e.first] == 0) && (groups[e.second] == 0)) {
                 groups[e.first] = groupOffset;
                 groupOffset++;
@@ -95,60 +102,12 @@ public class SatisfiabilityOfEqualityEquations {
             arr.put(i, sameGroupNodes.toArray(new Integer[0]));
             System.out.printf("%s: %s%n", i, Arrays.stream(arr.get(i)).map(Object::toString).collect(Collectors.joining(" ")));
         }
-        for (E con : cons) {
+        for (EquationUnit con : cons) {
             Integer[] group = arr.get(con.second);
             if (Arrays.asList(group).contains(con.first)) {
                 return false;
             }
         }
         return true;
-    }
-
-    public static class DataSetUnion {
-        public int[] p;     // parent
-        public int[] rank;  // rank
-
-        public DataSetUnion(int size) {
-            p = new int[size];
-            for (int i = 0; i < size; i++) {
-                p[i] = i;
-            }
-            rank = new int[size];
-        }
-
-        public void Init(int x) {
-            p[x] = x;
-        }
-
-        public int Find(int x) {
-            if (p[x] == x) return x;
-            return p[x] = Find(p[x]);
-        }
-
-        public void Union(int x, int y) {
-            x = Find(x);
-            y = Find(y);
-            if (x == y) return;
-            if (rank[x] < rank[y]) {
-                p[x] = y;
-            } else {
-                p[y] = x;
-                if (rank[x] == rank[y]) {
-                    rank[x]++;
-                }
-            }
-        }
-    }
-
-    public static class E {
-        public int first;
-        public int second;
-        public boolean equal;
-
-        public E(int first, int second, boolean equal) {
-            this.first = first;
-            this.second = second;
-            this.equal = equal;
-        }
     }
 }
