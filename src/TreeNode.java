@@ -6,9 +6,6 @@ public class TreeNode {
     TreeNode left;
     TreeNode right;
 
-    TreeNode() {
-    }
-
     TreeNode(int val) {
         this.val = val;
     }
@@ -19,20 +16,6 @@ public class TreeNode {
         this.right = right;
     }
 
-//    TreeNode(List<Integer> input) {
-//        List<TreeNode> nodes;
-//        this.val = input.get(0);
-//        int i = 1;
-//        int j = 0;
-//        nodes = new LinkedList<>();
-//        nodes.add(this);
-//        while (i < input.size()) {
-//            while (j < nodes.size()) {
-//
-//            }
-//        }
-//    }
-
     public static TreeNode fromArray(Integer[] tree) {
         if (tree.length == 0) return null;
         TreeNode root = new TreeNode(tree[0]);
@@ -41,11 +24,21 @@ public class TreeNode {
         for (int i = 1; i < tree.length; i++) {
             TreeNode node = q.peek();
             if (node.left == null) {
-                node.left = new TreeNode(tree[i]);
-                if (tree[i] != null) q.add(node.left);
+                if (tree[i] != null) {
+                    node.left = new TreeNode(tree[i]);
+                    q.add(node.left);
+                } else if (tree[i + 1] != null) {
+                    node.right = new TreeNode(tree[i + 1]);
+                    q.add(node.right);
+                    i++;
+                } else {
+                    i += 2;
+                }
             } else if (node.right == null) {
-                node.right = new TreeNode(tree[i]);
-                if (tree[i] != null) q.add(node.right);
+                if (tree[i] != null) {
+                    node.right = new TreeNode(tree[i]);
+                    q.add(node.right);
+                }
                 q.remove();
             }
         }

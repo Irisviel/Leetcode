@@ -15,9 +15,7 @@ public class TwoSumIVInputIsABST {
         TreeNode left = null;
         TreeNode right = null;
         Stack<TreeNode> l = new Stack<>();
-        Stack<TreeNode> r = new Stack<>();
         l.push(root);
-        r.push(root);
 
         left = root;
         right = root;
@@ -28,12 +26,12 @@ public class TwoSumIVInputIsABST {
 
         while (!l.isEmpty()) {
             current = l.pop();
-            if (current.val + r.peek().val == k) return true;
-            else if ((current.val + right.val > k) && (current.val + left.val < k)) {
+            if ((current.val + root.val == k) && (current != root)) return true;
+            else if ((current.val + right.val > k) || (current.val + left.val < k)) {
                 int search = k - current.val;
                 TreeNode n = root;
                 while (n != null) {
-                    if (n.val == search) return true;
+                    if ((n.val == search) && (n.val != current.val)) return true;
                     else if (n.val > search) {
                         n = n.left;
                     } else {
@@ -48,7 +46,6 @@ public class TwoSumIVInputIsABST {
                 l.push(current.left);
             }
         }
-
         return false;
     }
 }
