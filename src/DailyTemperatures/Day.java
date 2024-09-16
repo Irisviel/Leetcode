@@ -1,3 +1,5 @@
+package DailyTemperatures;
+
 public class Day implements Comparable<Day> {
     public int index;
     public int temp;

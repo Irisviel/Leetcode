@@ -6,6 +6,8 @@
  * If there is no future day for which this is possible, keep answer[i] == 0 instead.
  */
 
+package DailyTemperatures;
+
 import java.util.PriorityQueue;
 import java.util.Queue;
 
