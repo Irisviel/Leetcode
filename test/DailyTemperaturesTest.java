@@ -1,10 +1,14 @@
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import java.util.Arrays;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@TestMethodOrder(MethodOrderer.MethodName.class)
 class DailyTemperaturesTest {
 
     void Process(int[] temperatures, int[] expected) {
@@ -82,5 +86,18 @@ class DailyTemperaturesTest {
         Process(
                 new int[]{30},
                 new int[]{0});
+    }
+
+    @Test
+    void StressTest1() {
+        Random rnd = new Random();
+        int[] input = new int[30000];
+        for (int i = 0; i < input.length; i++) {
+            input[i] = rnd.nextBoolean() ? 71 : 76;
+        }
+        long start = System.currentTimeMillis();
+        DailyTemperatures.dailyTemperatures(input);
+        long stop = System.currentTimeMillis();
+        Assertions.assertTrue(stop - start < 1000);
     }
 }
