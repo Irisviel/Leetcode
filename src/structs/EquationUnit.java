@@ -1,4 +1,4 @@
-package LongestConsecutiveSequence;
+package structs;
 
 public class EquationUnit {
     public int first;

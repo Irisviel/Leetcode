@@ -5,8 +5,7 @@
  * Return true if it is possible to assign integers to variable names so as to satisfy all the given equations, or false otherwise.
  */
 
-package LongestConsecutiveSequence;
-
+import structs.EquationUnit;
 import structs.DataSetUnion;
 
 import java.util.*;
