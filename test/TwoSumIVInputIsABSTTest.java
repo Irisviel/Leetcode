@@ -1,4 +1,4 @@
-import TwoSumIVInputIsABST.TreeNode;
+import structs.TreeNode;
 import TwoSumIVInputIsABST.TwoSumIVInputIsABST;
 import org.junit.jupiter.api.Test;
 
